@@ -46,11 +46,66 @@ const mockActivity = [
   { id: 5, type: 'Buy', asset: 'BTC/USDT', amount: '0.150', price: 59800.00, time: '2D Ago', status: 'Completed' },
 ];
 
+const mockStrategyDetails: Record<string, any> = {
+  'snx': { name: 'Sigma Arbitrage X', type: 'Arbitrage', status: 'Active', pairs: ['BTC', 'USDC'], profitShare: '10%' },
+  'ccln': { name: 'Cross-Chain Liquidity Node', type: 'Grid', status: 'Active', pairs: ['ETH', 'USDC'], profitShare: '20%' },
+  'hfmr': { name: 'High-Freq Mean Reversion', type: 'Signal-based', status: 'Active', pairs: ['SOL', 'USDC'], profitShare: '15%' },
+  'vwtf': { name: 'Vol-Weighted Trend Follower', type: 'Momentum', status: 'Idle', pairs: ['BTC', 'SOL'], profitShare: '10%' },
+  'msv4': { name: 'Momentum Sentinel v4', type: 'Momentum', status: 'Active', pairs: ['ETH', 'BTC'], profitShare: '25%' },
+  'lh': { name: 'Liquidation Hunter', type: 'Signal-based', status: 'Active', pairs: ['SOL', 'ETH'], profitShare: '20%' },
+  'dna4': { name: 'Neural Alpha-IV', type: 'Signal-based', status: 'Active', pairs: ['ETH', 'USDC'], profitShare: '15%' },
+  'dca_m1': { name: 'DCA Master', type: 'DCA', status: 'Active', pairs: ['BTC', 'ETH'], profitShare: '5%' },
+};
+
 const StrategyDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const strategy = mockStrategyDetails[id || 'dna4'] || mockStrategyDetails['dna4'];
+
   const [activeTab, setActiveTab] = useState<'positions' | 'activity'>('positions');
   const [viewMode, setViewMode] = useState<'rate' | 'amount'>('rate');
   const [timeRange, setTimeRange] = useState<'1w' | '1m' | 'all'>('1m');
+
+  const getTypeSpecificParams = (type: string) => {
+    switch (type) {
+      case 'Grid':
+        return [
+          { label: 'Grid Quantity', value: '50' },
+          { label: 'Price Range', value: 'ETH $2k–$4k' },
+          { label: 'Strategy Tag', value: <span className="text-[#10B981] font-bold">Sideways Friendly</span> },
+        ];
+      case 'DCA':
+        return [
+          { label: 'Investment Frequency', value: 'Weekly' },
+          { label: 'Leverage', value: '1.0x (No Leverage)' },
+          { label: 'Strategy Tag', value: <span className="text-[#10B981] font-bold">Bull/Bear Friendly</span> },
+        ];
+      case 'Martingale':
+        return [
+          { label: 'Position Multiplier', value: '2x' },
+          { label: 'Max Steps', value: '8 Levels' },
+          { label: 'Risk Warning', value: <span className="text-[#EF4444] font-bold">High Risk - Max DD 72%</span> },
+        ];
+      case 'Momentum':
+        return [
+          { label: 'Leverage', value: '5.0x' },
+          { label: 'Trend Indicator', value: 'ADX > 25' },
+          { label: 'Strategy Tag', value: <span className="text-[#10B981] font-bold">Strong Trend Preferred</span> },
+        ];
+      case 'Arbitrage':
+        return [
+          { label: 'Arbitrage Type', value: 'Funding Fee' },
+          { label: 'Expected APR', value: '15–30%' },
+          { label: 'Risk Profile', value: <span className="text-[#3B82F6] font-bold">Low Volatility</span> },
+        ];
+      case 'Signal-based':
+      default:
+        return [
+          { label: 'Signal Source', value: 'On-chain Whales + Twitter' },
+          { label: 'Win Rate', value: '68%' },
+          { label: 'Trading Frequency', value: 'Medium' },
+        ];
+    }
+  };
 
   const TokenIcon = ({ symbol }: { symbol: string }) => {
     const iconMap: Record<string, string> = {
@@ -99,21 +154,15 @@ const StrategyDetail: React.FC = () => {
       <div className="flex items-center gap-2 text-white/40 text-[11px] font-semibold tracking-wide mb-8">
         <Link to="/strategy" className="hover:text-white transition-colors">Strategies</Link>
         <span>/</span>
-        <span className="text-white">DeltaNeutral-9 Detail</span>
+        <span className="text-white">{strategy.name} Detail</span>
       </div>
 
       <header className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 border-b border-white/5 pb-10">
         <div className="flex items-center gap-8">
           <div>
             <div className="flex items-center gap-4 mb-2">
-              <h1 className="text-4xl font-black tracking-tight">DeltaNeutral-9</h1>
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-2 bg-primary-accent/10 border border-primary-accent/20 px-4 py-1.5 rounded-full">
-                  <span className="w-2 h-2 bg-primary-accent rounded-full pulse-effect"></span>
-                  <span className="text-[11px] font-bold text-primary-accent tracking-widest uppercase">Active</span>
-                </div>
-                <div className="px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-[11px] font-bold text-white/60 uppercase tracking-widest">Signal-based</div>
-              </div>
+              <h1 className="text-4xl font-black tracking-tight">{strategy.name}</h1>
+              <div className="px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-[11px] font-bold text-white/60 uppercase tracking-widest">{strategy.type}</div>
             </div>
             <div className="flex items-center gap-4">
               <span className="text-sm text-white/40 font-mono">By <Link to="/agent/alpha" className="text-white/80 hover:text-primary-accent transition-colors">@Agent_Alpha</Link></span>
@@ -126,13 +175,13 @@ const StrategyDetail: React.FC = () => {
           <div className="text-right">
             <div className="text-[10px] text-white/30 font-bold tracking-[0.2em] mb-3 uppercase">Trading Pairs</div>
             <div className="flex justify-end">
-              <TokenPairIcons pairs={['BTC', 'ETH']} />
+              <TokenPairIcons pairs={strategy.pairs} />
             </div>
           </div>
           <div className="h-12 w-px bg-white/5"></div>
           <div className="text-right">
             <div className="text-[10px] text-white/30 font-bold tracking-[0.2em] mb-2 uppercase">Profit Share</div>
-            <div className="text-xl font-black font-mono text-white">20%</div>
+            <div className="text-xl font-black font-mono text-white">{strategy.profitShare}</div>
           </div>
         </div>
       </header>
@@ -347,13 +396,11 @@ const StrategyDetail: React.FC = () => {
                 </h4>
                 <div className="grid grid-cols-1 gap-4">
                   {[
-                    { label: 'Strategy Type', value: 'Signal-based' },
-                    { label: 'Trading Pairs', value: <TokenPairIcons pairs={['BTC', 'ETH']} /> },
-                    { label: 'Profit Share', value: '20%' },
+                    ...getTypeSpecificParams(strategy.type),
+                    { label: 'Profit Share', value: strategy.profitShare },
                     { label: 'Latest Price', value: '$63,420.25' },
                     { label: 'Runtime', value: '142D 08H' },
                     { label: 'Position Side', value: <span className="text-primary-accent font-bold">Long/Short</span> },
-                    { label: 'Leverage', value: '5.0x' },
                     { label: 'Initial Margin', value: '250,000 USDT' },
                   ].map((param, i) => (
                     <div key={i} className="bg-main-bg/50 border border-white/5 rounded-2xl p-5 flex justify-between items-center group hover:border-white/10 transition-all shadow-sm">
