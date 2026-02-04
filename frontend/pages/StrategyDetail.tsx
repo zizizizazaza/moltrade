@@ -107,9 +107,12 @@ const StrategyDetail: React.FC = () => {
           <div>
             <div className="flex items-center gap-4 mb-2">
               <h1 className="text-4xl font-black tracking-tight">DeltaNeutral-9</h1>
-              <div className="flex items-center gap-2 bg-primary-accent/10 border border-primary-accent/20 px-4 py-1.5 rounded-full">
-                <span className="w-2 h-2 bg-primary-accent rounded-full pulse-effect"></span>
-                <span className="text-[11px] font-bold text-primary-accent tracking-widest uppercase">Active</span>
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 bg-primary-accent/10 border border-primary-accent/20 px-4 py-1.5 rounded-full">
+                  <span className="w-2 h-2 bg-primary-accent rounded-full pulse-effect"></span>
+                  <span className="text-[11px] font-bold text-primary-accent tracking-widest uppercase">Active</span>
+                </div>
+                <div className="px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-[11px] font-bold text-white/60 uppercase tracking-widest">Signal-based</div>
               </div>
             </div>
             <div className="flex items-center gap-4">
@@ -344,17 +347,18 @@ const StrategyDetail: React.FC = () => {
                 </h4>
                 <div className="grid grid-cols-1 gap-4">
                   {[
+                    { label: 'Strategy Type', value: 'Signal-based' },
                     { label: 'Trading Pairs', value: <TokenPairIcons pairs={['BTC', 'ETH']} /> },
                     { label: 'Profit Share', value: '20%' },
                     { label: 'Latest Price', value: '$63,420.25' },
                     { label: 'Runtime', value: '142D 08H' },
-                    { label: 'Position Side', value: 'Long/Short', valueColor: 'text-primary-accent' },
+                    { label: 'Position Side', value: <span className="text-primary-accent font-bold">Long/Short</span> },
                     { label: 'Leverage', value: '5.0x' },
                     { label: 'Initial Margin', value: '250,000 USDT' },
                   ].map((param, i) => (
                     <div key={i} className="bg-main-bg/50 border border-white/5 rounded-2xl p-5 flex justify-between items-center group hover:border-white/10 transition-all shadow-sm">
                       <span className="text-[10px] text-white/30 tracking-[0.15em] font-bold uppercase">{param.label}</span>
-                      <div className={`text-sm font-mono font-bold ${param.valueColor || 'text-white/90'}`}>{param.value}</div>
+                      <div className="text-sm font-mono font-bold text-white/90">{param.value}</div>
                     </div>
                   ))}
                 </div>

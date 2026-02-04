@@ -6,11 +6,11 @@ import { Strategy, Trade } from '../types';
 const mockStrategies: Strategy[] = [
   { id: 'snx', name: 'Sigma Arbitrage X', author: '@agent_alpha', version: 'v2.4.0', status: 'Active', roi: 12.4, profit: 14200, followers: '1,240', tradingDays: 142, icon: '🦾', pairs: ['BTC', 'USDC'], profitShare: '10%', type: 'Arbitrage', maxDrawdown: 4.2 },
   { id: 'ccln', name: 'Cross-Chain Liquidity Node', author: '@neuro_trader', version: 'v1.1.2', status: 'Active', roi: 34.8, profit: 42900, followers: '842', tradingDays: 84, icon: 'FOX', pairs: ['ETH', 'USDC'], profitShare: '20%', type: 'Grid', maxDrawdown: 12.5 },
-  { id: 'hfmr', name: 'High-Freq Mean Reversion', author: '@grid_master', version: 'v0.9.5', status: 'Active', roi: 18.2, profit: 8450, followers: '2.1k', tradingDays: 312, icon: '🧬', pairs: ['SOL', 'USDC'], profitShare: '15%', type: 'Quant', maxDrawdown: 8.4 },
+  { id: 'hfmr', name: 'High-Freq Mean Reversion', author: '@grid_master', version: 'v0.9.5', status: 'Active', roi: 18.2, profit: 8450, followers: '2.1k', tradingDays: 312, icon: '🧬', pairs: ['SOL', 'USDC'], profitShare: '15%', type: 'Signal-based', maxDrawdown: 8.4 },
   { id: 'vwtf', name: 'Vol-Weighted Trend Follower', author: '@deep_agent', version: 'v3.0.1', status: 'Idle', roi: -1.2, profit: -2100, followers: '5.2k', tradingDays: 520, icon: '🐋', pairs: ['BTC', 'SOL'], profitShare: '10%', type: 'Momentum', maxDrawdown: 15.2 },
   { id: 'msv4', name: 'Momentum Sentinel v4', author: '@speed_demon', version: 'v4.1.0', status: 'Active', roi: 45.2, profit: 128400, followers: '12.4k', tradingDays: 842, icon: '⚡', pairs: ['ETH', 'BTC'], profitShare: '25%', type: 'Momentum', maxDrawdown: 18.2 },
   { id: 'lh', name: 'Liquidation Hunter', author: '@dark_pool', version: 'v0.2.1', status: 'Active', roi: 124.5, profit: 342000, followers: '3.1k', tradingDays: 45, icon: '🎯', pairs: ['SOL', 'ETH'], profitShare: '20%', type: 'Signal-based', maxDrawdown: 22.4 },
-  { id: 'dna4', name: 'Neural Alpha-IV', author: '@gpt_trader', version: 'v1.0.0', status: 'Active', roi: 89.2, profit: 56400, followers: '4.8k', tradingDays: 156, icon: '🧠', pairs: ['ETH', 'USDC'], profitShare: '15%', type: 'AI', maxDrawdown: 9.8 },
+  { id: 'dna4', name: 'Neural Alpha-IV', author: '@gpt_trader', version: 'v1.0.0', status: 'Active', roi: 89.2, profit: 56400, followers: '4.8k', tradingDays: 156, icon: '🧠', pairs: ['ETH', 'USDC'], profitShare: '15%', type: 'Signal-based', maxDrawdown: 9.8 },
   { id: 'dca_m1', name: 'DCA Master', author: '@stacker', version: 'v2.1.0', status: 'Active', roi: 15.6, profit: 12300, followers: '1.5k', tradingDays: 420, icon: '🧱', pairs: ['BTC', 'ETH'], profitShare: '5%', type: 'DCA', maxDrawdown: 5.4 },
 ];
 
